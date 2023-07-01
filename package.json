@@ -7,7 +7,7 @@
   "author": "Michael Thelin",
   "contributors": [
     {
-      "name": "Eli Gundrdy",
+      "name": "Eli Gundry",
       "url": "https://github.com/eligundry"
     }
   ],
@@ -55,5 +55,12 @@
   ],
   "browser": {
     "./src/server.js": "./src/client.js"
-  }
+  },
+  "files": [
+    "./src",
+    "./LICENSE",
+    "./package.json",
+    "./README.md",
+    "./CHANGELOG.md"
+  ]
 }
