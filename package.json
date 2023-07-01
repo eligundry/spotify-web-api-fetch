@@ -1,20 +1,20 @@
 {
-  "name": "spotify-web-api-node",
-  "version": "5.0.2",
-  "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
+  "name": "spotify-web-api-fetch",
+  "version": "6.0.0",
+  "homepage": "https://github.com/eligundry/spotify-web-api-fetch",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "./src/server.js",
   "author": "Michael Thelin",
   "contributors": [
     {
-      "name": "José M. Perez",
-      "url": "https://github.com/JMPerez"
+      "name": "Eli Gundrdy",
+      "url": "https://github.com/eligundry"
     }
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thelinmichael/spotify-web-api-node.git"
+    "url": "https://github.com/eligundry/spotify-web-api-fetch.git"
   },
   "scripts": {
     "test": "jest",
