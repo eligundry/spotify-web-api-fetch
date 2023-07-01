@@ -34,7 +34,6 @@
       "git add"
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "coveralls": "^3.1.0",
     "husky": "^4.3.0",
@@ -42,6 +41,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-resolve": "^26.6.2",
     "lint-staged": "^10.4.0",
+    "node-fetch": "^2.6.12",
     "prettier": "^2.1.2"
   },
   "keywords": [

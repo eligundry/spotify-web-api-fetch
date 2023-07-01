@@ -1,0 +1,27 @@
+name: Pull Request CI
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        node_version:
+          - 14
+          - 16
+          - 18
+          - 20
+    name: 'Unit tests'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+        env:
+          CI_NODE_VERSION: ${{ matrix.node_version }}
