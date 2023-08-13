@@ -19,7 +19,8 @@
   "scripts": {
     "test": "jest",
     "travis": "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prettier": "prettier . --write"
   },
   "jest": {
     "verbose": true,
@@ -62,5 +63,13 @@
     "./package.json",
     "./README.md",
     "./CHANGELOG.md"
-  ]
+  ],
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "arrowParens": "avoid"
+  }
 }
