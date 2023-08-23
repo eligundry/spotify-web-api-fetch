@@ -19,19 +19,19 @@ export type HttpManagerCallback<Body = any> = (
 
 export default class HttpManager {
   static get(request: Request, callback: HttpManagerCallback) {
-    return this.makeRequest('GET', request, callback)
+    return HttpManager.makeRequest('GET', request, callback)
   }
 
   static post(request: Request, callback: HttpManagerCallback) {
-    return this.makeRequest('POST', request, callback)
+    return HttpManager.makeRequest('POST', request, callback)
   }
 
   static del(request: Request, callback: HttpManagerCallback) {
-    return this.makeRequest('POST', request, callback)
+    return HttpManager.makeRequest('DELETE', request, callback)
   }
 
   static put(request: Request, callback: HttpManagerCallback) {
-    return this.makeRequest('POST', request, callback)
+    return HttpManager.makeRequest('PUT', request, callback)
   }
 
   private static async makeRequest(

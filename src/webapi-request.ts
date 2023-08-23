@@ -4,7 +4,7 @@ const DEFAULT_HOST = 'api.spotify.com',
   DEFAULT_PORT = 443,
   DEFAULT_SCHEME = 'https'
 
-const builder = function (accessToken: string) {
+const builder = function (accessToken: string | null | undefined) {
   return Request.builder()
     .withHost(DEFAULT_HOST)
     .withPort(DEFAULT_PORT)

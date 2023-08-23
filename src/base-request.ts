@@ -34,25 +34,27 @@ export class Builder {
       | Record<string, string | number | boolean | undefined | null>
       | string
       | URLSearchParams
+      | undefined
+      | any
     )[]
   ) {
     this.queryParameters = args.reduce((acc: URLSearchParams, params) => {
       if (typeof params === 'string') {
         const strParams = new URLSearchParams(params)
         for (const [key, value] of strParams.entries()) {
-          if (value) {
+          if (typeof value !== 'undefined' && value !== null) {
             acc.append(key, value)
           }
         }
       } else if (Array.isArray(params)) {
         params.forEach(([key, value]) => {
-          if (value) {
+          if (typeof value !== 'undefined' && value !== null) {
             acc.append(key, value)
           }
         })
       } else if (params instanceof URLSearchParams) {
         for (const [key, value] of params.entries()) {
-          if (value) {
+          if (typeof value !== 'undefined' && value !== null) {
             acc.append(key, value)
           }
         }
@@ -60,7 +62,7 @@ export class Builder {
         for (const key in params) {
           const value = params[key]
 
-          if (value) {
+          if (typeof value !== 'undefined' && value !== null) {
             acc.append(key, value.toString())
           }
         }
@@ -72,13 +74,33 @@ export class Builder {
     return this
   }
 
-  withBodyParameters(bodyParameters: any) {
-    this.bodyParameters = bodyParameters
+  withBodyParameters(
+    ...args: (any[] | Record<string, any> | string | null | undefined)[]
+  ) {
+    this.bodyParameters = args.reduce((acc, params) => {
+      if (!params) {
+        acc = undefined
+      } else if (!acc) {
+        acc = params
+      } else if (Array.isArray(acc)) {
+        const values = Array.isArray(params) ? params : [params]
+        acc = [...acc, ...values]
+      } else if (typeof acc === 'object') {
+        // @ts-ignore
+        acc = { ...acc, ...params }
+      }
+
+      return acc
+    }, this.bodyParameters)
+
     return this
   }
 
   withHeaders(headers: HeadersInit) {
-    this.headers = new Headers(headers)
+    const newHeaders = new Headers(headers)
+    newHeaders.forEach((value, key) => {
+      this.headers.append(key, value)
+    })
     return this
   }
 
@@ -87,14 +109,42 @@ export class Builder {
     return this
   }
 
-  withAuth(accessToken: string) {
-    this.headers.set('Authorization', `Bearer ${accessToken}`)
+  withAuth(accessToken: string | null | undefined) {
+    if (accessToken) {
+      this.withHeaders({ Authorization: `Bearer ${accessToken}` })
+    } else {
+      this.headers.delete('Authorization')
+    }
+
     return this
   }
 
   build() {
     return new Request(this)
   }
+
+  // private assigner = function(key: string) {
+  //   return function() {
+  //     for (var i = 0; i < arguments.length; i++) {
+  //       this[key] = this.assign(this[key], arguments[i])
+  //     }
+  //
+  //     return this
+  //   }
+  // }
+  //
+  // private assign = function(src: any, obj: any) {
+  //   if (obj && Array.isArray(obj)) {
+  //     return obj
+  //   }
+  //   if (obj && typeof obj === 'string') {
+  //     return obj
+  //   }
+  //   if (obj && Object.keys(obj).length > 0) {
+  //     return Object.assign(src || {}, obj)
+  //   }
+  //   return src
+  // }
 }
 
 export default class Request {
