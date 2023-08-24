@@ -49,27 +49,6 @@ describe('Create Requests', () => {
     expect(request.getQueryParameters().get('thirdParameter')).toBe('hello')
   })
 
-  test('Should add query parameters (combine calls)', () => {
-    var request = Request.builder()
-      .withHost('such.api.wow')
-      .withPort(1337)
-      .withScheme('http')
-      .withQueryParameters(
-        {
-          oneParameter: 1,
-          anotherParameter: true,
-        },
-        {
-          thirdParameter: 'hello',
-        },
-      )
-      .build()
-
-    expect(request.getQueryParameters().get('oneParameter')).toBe('1')
-    expect(request.getQueryParameters().get('anotherParameter')).toBe('true')
-    expect(request.getQueryParameters().get('thirdParameter')).toBe('hello')
-  })
-
   test('Should add body parameters', () => {
     var request = Request.builder()
       .withHost('such.api.wow')
@@ -105,12 +84,12 @@ describe('Create Requests', () => {
       .withScheme('http')
       .withHeaders({
         Authorization: 'Basic WOOP',
-        'Content-Type': 'application/lol',
       })
+      .asJSON()
       .build()
 
     expect(request.getHeaders().get('Authorization')).toBe('Basic WOOP')
-    expect(request.getHeaders().get('Content-Type')).toBe('application/lol')
+    expect(request.getHeaders().get('Content-Type')).toBe('application/json')
   })
 
   test('Should add path', () => {

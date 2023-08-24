@@ -377,17 +377,15 @@ export default class SpotifyWebApi {
   ): Promise<Response<SpotifyApi.MultipleTracksResponse>>
   getTracks(
     trackIds: ReadonlyArray<string>,
-    options?: MarketOptions,
+    options: MarketOptions = {},
     callback?: Callback<SpotifyApi.MultipleTracksResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks')
-      .withQueryParameters(
-        {
-          ids: trackIds.join(','),
-        },
-        options,
-      )
+      .withQueryParameters({
+        ids: trackIds.join(','),
+        ...options,
+      })
       .build()
       .execute(HttpManager.get, callback)
   }
@@ -442,17 +440,15 @@ export default class SpotifyWebApi {
   ): Promise<Response<SpotifyApi.MultipleAlbumsResponse>>
   getAlbums(
     albumIds: ReadonlyArray<string>,
-    options?: MarketOptions,
+    options: MarketOptions = {},
     callback?: Callback<SpotifyApi.MultipleAlbumsResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums')
-      .withQueryParameters(
-        {
-          ids: albumIds.join(','),
-        },
-        options,
-      )
+      .withQueryParameters({
+        ids: albumIds.join(','),
+        ...options,
+      })
       .build()
       .execute(HttpManager.get, callback)
   }
@@ -542,18 +538,16 @@ export default class SpotifyWebApi {
   search(
     query: string,
     types: ReadonlyArray<SearchType>,
-    options?: SearchOptions,
+    options: SearchOptions = {},
     callback?: Callback<SpotifyApi.SearchResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/search/')
-      .withQueryParameters(
-        {
-          type: types.join(','),
-          q: query,
-        },
-        options,
-      )
+      .withQueryParameters({
+        type: types.join(','),
+        q: query,
+        ...options,
+      })
       .build()
       .execute(HttpManager.get, callback)
   }
@@ -962,7 +956,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/playlists')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({
         name: playlistName,
         ...options,
@@ -995,7 +989,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/followers`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback)
@@ -1011,14 +1005,14 @@ export default class SpotifyWebApi {
    */
   unfollowPlaylist(
     playlistId: string,
-    callback: Callback<SpotifyApi.UnfollowPlaylistReponse>,
+    callback: Callback<SpotifyApi.UnfollowPlaylistResponse>,
   ): void
   unfollowPlaylist(
     playlistId: string,
-  ): Promise<Response<SpotifyApi.UnfollowPlaylistReponse>>
+  ): Promise<Response<SpotifyApi.UnfollowPlaylistResponse>>
   unfollowPlaylist(
     playlistId: string,
-    callback?: Callback<SpotifyApi.UnfollowPlaylistReponse>,
+    callback?: Callback<SpotifyApi.UnfollowPlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/followers`)
@@ -1038,20 +1032,20 @@ export default class SpotifyWebApi {
   changePlaylistDetails(
     playlistId: string,
     options: ChangePlaylistOptions,
-    callback: Callback<SpotifyApi.ChangePlaylistDetailsReponse>,
+    callback: Callback<SpotifyApi.ChangePlaylistDetailsResponse>,
   ): void
   changePlaylistDetails(
     playlistId: string,
     options?: ChangePlaylistOptions,
-  ): Promise<Response<SpotifyApi.ChangePlaylistDetailsReponse>>
+  ): Promise<Response<SpotifyApi.ChangePlaylistDetailsResponse>>
   changePlaylistDetails(
     playlistId: string,
     options?: ChangePlaylistOptions,
-    callback?: Callback<SpotifyApi.ChangePlaylistDetailsReponse>,
+    callback?: Callback<SpotifyApi.ChangePlaylistDetailsResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback)
@@ -1117,7 +1111,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/tracks`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withQueryParameters(options)
       .withBodyParameters({
         uris: tracks,
@@ -1150,18 +1144,16 @@ export default class SpotifyWebApi {
   removeTracksFromPlaylist(
     playlistId: string,
     tracks: ReadonlyArray<Track>,
-    options?: SnapshotOptions,
+    options: SnapshotOptions = {},
     callback?: Callback<SpotifyApi.RemoveTracksFromPlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/tracks`)
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(
-        {
-          tracks: tracks,
-        },
-        options,
-      )
+      .asJSON()
+      .withBodyParameters({
+        tracks: tracks,
+        ...options,
+      })
       .build()
       .execute(HttpManager.del, callback)
   }
@@ -1194,7 +1186,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/tracks`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({
         positions: positions,
         snapshot_id: snapshotId,
@@ -1227,7 +1219,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/tracks`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({
         uris: uris,
       })
@@ -1267,7 +1259,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/playlists/${playlistId}/tracks`)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({
         range_start: rangeStart,
         insert_before: insertBefore,
@@ -1496,7 +1488,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({ ids: trackIds })
       .build()
       .execute(HttpManager.del, callback)
@@ -1521,7 +1513,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({ ids: trackIds })
       .build()
       .execute(HttpManager.put, callback)
@@ -1547,7 +1539,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(albumIds)
       .build()
       .execute(HttpManager.del, callback)
@@ -1572,7 +1564,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(albumIds)
       .build()
       .execute(HttpManager.put, callback)
@@ -1725,17 +1717,15 @@ export default class SpotifyWebApi {
   ): Promise<Response<SpotifyApi.AddToQueueResponse>>
   addToQueue(
     uri: string,
-    options?: DeviceOptions,
+    options: DeviceOptions = {},
     callback?: Callback<SpotifyApi.AddToQueueResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/queue')
-      .withQueryParameters(
-        {
-          uri: uri,
-        },
-        options,
-      )
+      .withQueryParameters({
+        uri: uri,
+        ...options,
+      })
       .build()
       .execute(HttpManager.post, callback)
   }
@@ -1833,7 +1823,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters({
         device_ids: deviceIds,
         ...options,
@@ -1867,7 +1857,7 @@ export default class SpotifyWebApi {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
       .withQueryParameters(queryParams)
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(postData)
       .build()
       .execute(HttpManager.put, callback)
@@ -1893,7 +1883,7 @@ export default class SpotifyWebApi {
             ? { device_id: options.device_id }
             : null,
         )
-        .withHeaders({ 'Content-Type': 'application/json' })
+        .asJSON()
         .build()
         .execute(HttpManager.put, callback)
     )
@@ -2204,17 +2194,15 @@ export default class SpotifyWebApi {
     options?: AfterOptions<string>,
   ): Promise<Response<SpotifyApi.UsersFollowedArtistsResponse>>
   getFollowedArtists(
-    options?: AfterOptions<string>,
+    options: AfterOptions<string> = {},
     callback?: Callback<SpotifyApi.UsersFollowedArtistsResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
-      .withQueryParameters(
-        {
-          type: 'artist',
-        },
-        options,
-      )
+      .withQueryParameters({
+        type: 'artist',
+        ...options,
+      })
       .build()
       .execute(HttpManager.get, callback)
   }
@@ -2232,18 +2220,18 @@ export default class SpotifyWebApi {
     userId: string,
     playlistId: string,
     followerIds: ReadonlyArray<string>,
-    callback: Callback<SpotifyApi.UsersFollowPlaylistReponse>,
+    callback: Callback<SpotifyApi.UsersFollowPlaylistResponse>,
   ): void
   areFollowingPlaylist(
     userId: string,
     playlistId: string,
     followerIds: ReadonlyArray<string>,
-  ): Promise<Response<SpotifyApi.UsersFollowPlaylistReponse>>
+  ): Promise<Response<SpotifyApi.UsersFollowPlaylistResponse>>
   areFollowingPlaylist(
     userId: string,
     playlistId: string,
     followerIds: ReadonlyArray<string>,
-    callback?: Callback<SpotifyApi.UsersFollowPlaylistReponse>,
+    callback?: Callback<SpotifyApi.UsersFollowPlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(
@@ -2385,7 +2373,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.SingleCategoryResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/browse/categories/' + categoryId)
+      .withPath(`/v1/browse/categories/${categoryId}`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -2402,16 +2390,16 @@ export default class SpotifyWebApi {
   getPlaylistsForCategory(
     categoryId: string,
     options: PaginationCountryOptions,
-    callback: Callback<SpotifyApi.CategoryPlaylistsReponse>,
+    callback: Callback<SpotifyApi.CategoryPlaylistsResponse>,
   ): void
   getPlaylistsForCategory(
     categoryId: string,
     options?: PaginationCountryOptions,
-  ): Promise<Response<SpotifyApi.CategoryPlaylistsReponse>>
+  ): Promise<Response<SpotifyApi.CategoryPlaylistsResponse>>
   getPlaylistsForCategory(
     categoryId: string,
     options?: PaginationCountryOptions,
-    callback?: Callback<SpotifyApi.CategoryPlaylistsReponse>,
+    callback?: Callback<SpotifyApi.CategoryPlaylistsResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/browse/categories/${categoryId}/playlists`)
@@ -2532,7 +2520,7 @@ export default class SpotifyWebApi {
   ) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/shows')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withQueryParameters({
         ids: showIds.join(','),
       })
@@ -2554,7 +2542,7 @@ export default class SpotifyWebApi {
   addToMySavedShows(showIds: ReadonlyArray<string>, callback?: Callback<void>) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/shows')
-      .withHeaders({ 'Content-Type': 'application/json' })
+      .asJSON()
       .withBodyParameters(showIds)
       .build()
       .execute(HttpManager.put, callback)
