@@ -1,5 +1,4 @@
-const { util } = require('prettier');
-var SpotifyWebApi = require('../');
+import SpotifyWebApi from '../'
 
 /**
  * This example uses the Client Credentials authorization flow.
@@ -11,20 +10,20 @@ var SpotifyWebApi = require('../');
  */
 const spotifyApi = new SpotifyWebApi({
   clientId: '<Client ID>',
-  clientSecret: '<Client Secret>'
-});
+  clientSecret: '<Client Secret>',
+})
 
 // Retrieve an access token using your credentials
 spotifyApi
   .clientCredentialsGrant()
-  .then(function (result) {
-    console.log('It worked! Your access token is: ' + result.body.access_token);
+  .then(function(result) {
+    console.log('It worked! Your access token is: ' + result.body.access_token)
   })
-  .catch(function (err) {
+  .catch(function(err) {
     console.log(
       'If this is printed, it probably means that you used invalid ' +
-        'clientId and clientSecret values. Please check!'
-    );
-    console.log('Hint: ');
-    console.log(err);
-  });
+      'clientId and clientSecret values. Please check!',
+    )
+    console.log('Hint: ')
+    console.log(err)
+  })

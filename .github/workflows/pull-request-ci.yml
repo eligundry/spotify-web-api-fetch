@@ -21,6 +21,9 @@ jobs:
           node-version: ${{ matrix.node_version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm test
+      - run: npm run build
+        env:
+          CI_NODE_VERSION: ${{ matrix.node_version }}
+      - run: npm test:ci
         env:
           CI_NODE_VERSION: ${{ matrix.node_version }}

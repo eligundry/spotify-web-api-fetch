@@ -47,7 +47,7 @@ export default class ServerSpotifyWebApi extends WebSpotifyApi {
    */
   createAuthorizeURL(
     scopes: ReadonlyArray<string>,
-    state: string,
+    state?: string,
     showDialog = false,
     responseType: 'code' | 'token' = 'code',
   ) {

@@ -351,7 +351,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.SingleTrackResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/tracks/' + trackId)
+      .withPath(`/v1/tracks/${trackId}`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -416,7 +416,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.SingleAlbumResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/albums/' + albumId)
+      .withPath(`/v1/albums/${albumId}`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -477,7 +477,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.SingleArtistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/artists/' + artistId)
+      .withPath(`/v1/artists/${artistId}`)
       .build()
       .execute(HttpManager.get, callback)
   }
@@ -691,7 +691,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.ArtistsAlbumsResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/artists/' + artistId + '/albums')
+      .withPath(`/v1/artists/${artistId}/albums`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -722,7 +722,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.AlbumTracksResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/albums/' + albumId + '/tracks')
+      .withPath(`/v1/albums/${albumId}/tracks`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -753,7 +753,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.ArtistsTopTracksResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/artists/' + artistId + '/top-tracks')
+      .withPath(`/v1/artists/${artistId}/top-tracks`)
       .withQueryParameters({
         country: country,
       })
@@ -901,7 +901,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.SinglePlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId)
+      .withPath(`/v1/playlists/${playlistId}`)
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback)
@@ -994,7 +994,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.FollowPlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/followers')
+      .withPath(`/v1/playlists/${playlistId}/followers`)
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(options)
       .build()
@@ -1050,7 +1050,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.ChangePlaylistDetailsReponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId)
+      .withPath(`/v1/playlists/${playlistId}`)
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(options)
       .build()
@@ -1081,7 +1081,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.UploadCustomPlaylistCoverImageResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/images')
+      .withPath(`/v1/playlists/${playlistId}/images`)
       .withHeaders({ 'Content-Type': 'image/jpeg' })
       .withBodyParameters(base64URI)
       .build()
@@ -1116,7 +1116,7 @@ export default class SpotifyWebApi {
     callback?: Callback<SpotifyApi.AddTracksToPlaylistResponse>,
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath(`/v1/playlists/${playlistId}/tracks`)
       .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .withBodyParameters({
